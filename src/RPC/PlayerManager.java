@@ -17,6 +17,7 @@ public class PlayerManager extends UnicastRemoteObject implements RPCGameInterfa
 	public final int thisPlayer;
 	public int actualPlayer = 0;
 	public boolean iAmFirst = false;
+	public int countPlaysForDraw = 0;
 
 	public RPCGameInterface guestRPCConnection;
 
@@ -74,6 +75,8 @@ public class PlayerManager extends UnicastRemoteObject implements RPCGameInterfa
 		int column = Character.getNumericValue(choosedCell.charAt(2));
 
 		gameManager.makePlay(board, line, column, player);
+
+		countPlaysForDraw += 1;
 
 		this.guestLastPlay = "" + choosedCell + player;
 

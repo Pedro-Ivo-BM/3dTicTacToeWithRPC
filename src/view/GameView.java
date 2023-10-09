@@ -182,16 +182,26 @@ public class GameView {
 									cells[board][line][column].setText("" + player.thisPlayer);
 									player.guestRPCConnection.setPlayerAction(choosedCell, player.thisPlayer);
 
+									player.countPlaysForDraw += 1;
 									boolean isWinAction = player.gameManager.checkVictory(player.thisPlayer);
 
 									if (isWinAction) {
+
 										sendTextToChatLocally("[SISTEMA] VOCÊ VENCEU");
 										player.guestRPCConnection.sendSystemMessage("ADVERSÁRIO VENCEU");
 										player.actualPlayer = 0;
 										player.guestRPCConnection.setActualPlayer(player.actualPlayer);
 										changeButtonsHabilitation(false);
 
-									} else {
+									} else if (player.countPlaysForDraw == 27) {
+										sendTextToChatLocally("[SISTEMA] EMPATE");
+										player.guestRPCConnection.sendSystemMessage("EMPATE");
+										player.actualPlayer = 0;
+										player.guestRPCConnection.setActualPlayer(player.actualPlayer);
+										changeButtonsHabilitation(false);
+									}
+
+									else {
 										player.actualPlayer = player.actualPlayer == 1 ? 2 : 1;
 										changeButtonsHabilitation(false);
 										player.guestRPCConnection.setActualPlayer(player.actualPlayer);
